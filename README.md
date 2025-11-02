@@ -17,10 +17,8 @@ Data sources include **xView** and **DOTA** datasets.
 - 📈 Utility scripts: `train_yolo.py`, `predict_yolo.py`, `summarize_run.py`
 - ⚙️ Easy path and parameter customization
 
----
-
 ## 🗂️ Project Structure
-
+```text
 dl_xview_yolo/
 ├── scripts/
 │   ├── convert_all_to_yolo.py     # Converts datasets to YOLO format
@@ -37,7 +35,7 @@ dl_xview_yolo/
 ├── LICENSE
 ├── README.md
 └── requirements.txt
----
+
 
 ## ⚙️ Installation & Setup
 
