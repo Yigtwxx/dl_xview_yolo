@@ -1,4 +1,9 @@
 # 🛰️ DL_XVIEW • Object Detection in Satellite Imagery
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
+![YOLOv8](https://img.shields.io/badge/Model-YOLOv8-success.svg)
+![Stars](https://img.shields.io/github/stars/Yigtwxx/dl_xview_yolo?style=social)
+
 
 **Deep Learning–based Object Detection** system for satellite imagery using **YOLOv8**.  
 This project applies **state-of-the-art computer vision models** to detect objects such as airplanes, ships, vehicles, bridges, and more from aerial or satellite images.  
