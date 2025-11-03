@@ -9,18 +9,18 @@
 This project applies **state-of-the-art computer vision models** to detect objects such as airplanes, ships, vehicles, bridges, and more from aerial or satellite images.  
 Data sources include **xView** and **DOTA** datasets.
 
-> 🎯 Goal: Detect and classify multiple objects in high-resolution satellite imagery  
-> 💡 Model: YOLOv8 (with Oriented Bounding Box / OBB support)
+>  Goal: Detect and classify multiple objects in high-resolution satellite imagery  
+>  Model: YOLOv8 (with Oriented Bounding Box / OBB support)
 
 ---
 
-## 🧩 Features
+##  Features
 
-- 🚀 Object detection using YOLOv8 (Ultralytics)
-- 🔄 Dataset conversion utilities for xView / DOTA → YOLO format (`convert_all_to_yolo.py`)
-- 🖥️ Interactive web-based prediction UI (`ui/index.html`)
-- 📈 Utility scripts: `train_yolo.py`, `predict_yolo.py`, `summarize_run.py`
-- ⚙️ Easy path and parameter customization
+-  Object detection using YOLOv8 (Ultralytics)
+-  Dataset conversion utilities for xView / DOTA → YOLO format (`convert_all_to_yolo.py`)
+-  Interactive web-based prediction UI (`ui/index.html`)
+-  Utility scripts: `train_yolo.py`, `predict_yolo.py`, `summarize_run.py`
+-  Easy path and parameter customization
 
 ## 🗂️ Project Structure
 ```text
@@ -64,7 +64,7 @@ pip install ultralytics opencv-python pillow tqdm numpy torch torchvision torcha
 
 ---
 
-## 🧠 Dataset Preparation
+##  Dataset Preparation
 
 ### 1️⃣ Supported Datasets
 
@@ -85,7 +85,7 @@ python scripts/convert_all_to_yolo.py --src "data/raw" --out "data/yolo_data" --
 
 ---
 
-## 🏋️ Training
+##  Training
 
 ```bash
 python scripts/train_yolo.py --data "configs/data.yaml" --model "yolov8n.pt" --epochs 40 --imgsz 1024
@@ -96,7 +96,7 @@ python scripts/train_yolo.py --data "configs/data.yaml" --model "yolov8n.pt" --e
 
 ---
 
-## 🔍 Inference
+##  Inference
 
 ### Command Line
 
