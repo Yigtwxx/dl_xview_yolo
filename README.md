@@ -189,7 +189,6 @@ See the [LICENSE](LICENSE) file for details.
 **Yiğit Erdoğan (Yigtwxx)**
 📧 [yigiterdogan6@icloud.com](mailto:yigiterdogan6@icloud.com)
 🧠 Focus Areas: Deep Learning • Computer Vision • Data Science
-LinkedIn: www.linkedin.com/in/yiğit-erdoğan-ba7a64294
 ---
 
 ## ⭐ Support
@@ -198,6 +197,8 @@ If you find this project useful, please consider giving it a **⭐ Star** on Git
 
 🌐 **Live Project Page:** [https://yigtwxx.github.io/dl_xview_yolo](https://yigtwxx.github.io/dl_xview_yolo)
 
+## Contact
+LinkedIn: www.linkedin.com/in/yiğit-erdoğan-ba7a64294
 
 ```bash
 git clone https://github.com/Yigtwxx/dl_xview_yolo.git
