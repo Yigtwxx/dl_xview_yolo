@@ -4,7 +4,6 @@
 ![YOLOv8](https://img.shields.io/badge/Model-YOLOv8-success.svg)
 ![Stars](https://img.shields.io/github/stars/Yigtwxx/dl_xview_yolo?style=social)
 
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)
 ![Issues](https://img.shields.io/github/issues/Yigtwxx/dl_xview_yolo)
 
