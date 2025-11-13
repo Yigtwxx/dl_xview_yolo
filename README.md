@@ -191,7 +191,7 @@ See the [LICENSE](LICENSE) file for details.
 ## 💬 Author
 
 **Yiğit Erdoğan (Yigtwxx)**
-📧 [yigiterdogan6@icloud.com](mailto:yigiterdogan6@icloud.com)
+📧 Mail: [yigiterdogan6@icloud.com]
 
 🧠 Focus Areas: Deep Learning • Computer Vision • Data Science
 ---
