@@ -195,6 +195,7 @@ See the [LICENSE](LICENSE) file for details.
 📧 Mail: yigiterdogan6@icloud.com
 
 🧠 Focus Areas: Deep Learning • Computer Vision • Data Science
+
 ---
 
 ## Contact
