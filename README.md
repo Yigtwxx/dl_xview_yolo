@@ -197,6 +197,9 @@ See the [LICENSE](LICENSE) file for details.
 🧠 Focus Areas: Deep Learning • Computer Vision • Data Science
 ---
 
+## Contact
+LinkedIn: www.linkedin.com/in/yiğit-erdoğan-ba7a64294
+
 ## ⭐ Support
 
 If you find this project useful, please consider giving it a **⭐ Star** on GitHub!
