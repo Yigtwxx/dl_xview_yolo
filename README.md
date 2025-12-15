@@ -178,7 +178,6 @@ Otherwise, upload to Google Drive and link it here:
 ```bash
 python scripts/train_yolo.py --resume
 ```
-
 ---
 
 ## 📜 License
