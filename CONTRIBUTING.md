@@ -1,112 +1,112 @@
-# Katkıda Bulunma Rehberi
+# Contributing Guide
 
-Projeye katkıda bulunmak istediğiniz için teşekkürler! Bu rehber, katkı sürecini kolaylaştırmak için hazırlanmıştır.
+Thank you for wanting to contribute to this project! This guide is designed to make the contribution process easier.
 
-## İçindekiler
-- [Başlamadan Önce](#başlamadan-önce)
-- [Geliştirme Ortamı Kurulumu](#geliştirme-ortamı-kurulumu)
-- [Kod Stileri](#kod-stileri)
-- [Katkı Adımları](#katkı-adımları)
-- [Commit Mesajları](#commit-mesajları)
-- [Pull Request Süreci](#pull-request-süreci)
-- [Test Etme](#test-etme)
+## Table of Contents
+- [Before You Start](#before-you-start)
+- [Development Environment Setup](#development-environment-setup)
+- [Code Styles](#code-styles)
+- [Contribution Steps](#contribution-steps)
+- [Commit Messages](#commit-messages)
+- [Pull Request Process](#pull-request-process)
+- [Testing](#testing)
 
-## Başlamadan Önce
+## Before You Start
 
-Katkıda bulunmadan önce:
-- Projeyi fork edin
-- Projeyi yerel makinenize klonlayın
-- Branch kurallarımızı okuyun
-- Kod Davranış Kurallarımızı okuyun
+Before contributing:
+- Fork the repository
+- Clone it to your local machine
+- Read our branch naming conventions
+- Read our Code of Conduct
 
-## Geliştirme Ortamı Kurulumu
+## Development Environment Setup
 
-### Gereksinimler
+### Requirements
 - Python 3.8+
-- pip veya conda
+- pip or conda
 
-### Ortam Kurulumu
+### Environment Setup
 
 ```bash
-# Projeyi klonlayın
+# Clone the repository
 git clone https://github.com/YOUR_USERNAME/dl_xview_yolo.git
 cd dl_xview_yolo
 
-# Sanal ortam oluşturun
+# Create a virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
-# veya
+# or
 venv\Scripts\activate  # Windows
 
-# Bağımlılıkları yükleyin
+# Install dependencies
 pip install -r requirements.txt
 pip install -e .
 ```
 
-## Kod Stileri
+## Code Styles
 
-### Python Kodlama Standartları
-- **PEP 8** kurallarına uyun
-- Satır uzunluğu maksimum 88 karakter (Black formatter)
-- Fonksiyonlar ve sınıflar için docstring yazın
-- Anlamlı değişken adları kullanın
+### Python Coding Standards
+- Follow **PEP 8** guidelines
+- Maximum line length of 88 characters (Black formatter)
+- Write docstrings for functions and classes
+- Use meaningful variable names
 
-### Kullanılan Araçlar
+### Tools Used
 ```bash
-# Kodu formatla
+# Format code
 black .
 
-# Lint kontrol
+# Lint checking
 flake8 .
 
 # Type checking
 mypy .
 ```
 
-### Docstring Örneği
+### Docstring Example
 ```python
 def detect_objects_in_satellite_image(image_path: str, confidence: float = 0.5) -> dict:
     """
-    Uydu görüntüsünde nesne tespiti yapar.
+    Detect objects in satellite imagery.
     
     Args:
-        image_path (str): Uydu görüntüsünün yolu
-        confidence (float): Tespit güven eşiği (0-1 arası)
+        image_path (str): Path to the satellite image
+        confidence (float): Detection confidence threshold (0-1 range)
     
     Returns:
-        dict: Tespit sonuçları
+        dict: Detection results
     """
     pass
 ```
 
-## Katkı Adımları
+## Contribution Steps
 
-1. **Issue Oluşturun veya Bulun**
-   - Bir bug buldum veya özellik önerisi mi? Önce bir issue açın
-   - Varolan issue'leri kontrol edin, aynı konu üzerinde çalışılmıyor mu diye
+1. **Create or Find an Issue**
+   - Found a bug or want to suggest a feature? Open an issue first
+   - Check existing issues to see if the topic is already being worked on
 
-2. **Feature Branch Oluşturun**
+2. **Create a Feature Branch**
    ```bash
    git checkout -b feature/your-feature-name
-   # veya
+   # or
    git checkout -b bugfix/your-bug-name
    ```
 
-3. **Değişiklikleri Yapın**
-   - Küçük, mantıklı adımlar halinde commit yapın
-   - Yalnızca ilgili dosyaları değiştirin
+3. **Make Changes**
+   - Commit in small, logical steps
+   - Only modify relevant files
 
-4. **Branch Adlandırma Kuralları**
+4. **Branch Naming Conventions**
    - Feature: `feature/descriptive-name`
    - Bug Fix: `bugfix/issue-description`
    - Documentation: `docs/description`
-   - Örnek: `feature/yolov8-model-optimization`
+   - Example: `feature/yolov8-model-optimization`
 
-## Commit Mesajları
+## Commit Messages
 
-Anlaşılır commit mesajları yazın:
+Write clear and descriptive commit messages:
 
-### Örnek Formatı
+### Message Format
 ```
 <type>(<scope>): <subject>
 
@@ -115,78 +115,78 @@ Anlaşılır commit mesajları yazın:
 <footer>
 ```
 
-### Commit Tipleri
-- `feat`: Yeni özellik
-- `fix`: Hata düzeltimi
-- `docs`: Dokümantasyon güncelleme
-- `style`: Kod formatı değişiklikleri (PEP 8)
-- `refactor`: Kod yeniden düzenleme
-- `test`: Test ekleme/güncelleme
-- `chore`: Diğer değişiklikler
+### Commit Types
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation update
+- `style`: Code formatting changes (PEP 8)
+- `refactor`: Code refactoring
+- `test`: Adding/updating tests
+- `chore`: Other changes
 
-### Örnekler
+### Examples
 ```
-feat(detection): YOLOv8 model optimizasyonu ekle
+feat(detection): Add YOLOv8 model optimization
 
-fix(data_loader): xView veri yükleme hatasını düzelt
+fix(data_loader): Fix xView data loading error
 
-docs(readme): Kurulum talimatlarını güncelle
+docs(readme): Update installation instructions
 
-refactor(utils): Yardımcı fonksiyonları modülarize et
+refactor(utils): Modularize utility functions
 ```
 
-## Pull Request Süreci
+## Pull Request Process
 
-### PR Açmadan Önce
-- [ ] Ana branch'le güncellenmiş misiniz? (`git pull origin main`)
-- [ ] Testler geçiyor mu?
-- [ ] Kod formatı kontrol edildi mi? (`black`, `flake8`)
-- [ ] Docstring ve yorumlar yazılı mı?
-- [ ] CHANGELOG güncellenmiş mi?
+### Before Opening a PR
+- [ ] Are you up to date with the main branch? (`git pull origin main`)
+- [ ] Do all tests pass?
+- [ ] Is your code formatted? (`black`, `flake8`)
+- [ ] Are docstrings and comments written?
+- [ ] Is the CHANGELOG updated?
 
-### PR Şablonu
+### PR Template
 ```markdown
-## Açıklama
-Kısaca ne yaptığınızı açıklayın
+## Description
+Briefly describe what you did
 
-## İlgili Issue
+## Related Issue
 Closes #issue_number
 
-## Değişiklik Türü
+## Type of Change
 - [ ] Bug fix
-- [ ] Yeni özellik
-- [ ] Backward incompatible değişiklik
-- [ ] Dokümantasyon güncellemesi
+- [ ] New feature
+- [ ] Breaking change
+- [ ] Documentation update
 
-## Test Edildi Mi?
-- [ ] Lokal ortamda test edildi
-- [ ] Test case'ler eklendi
-- [ ] Mevcut testler hala geçiyor
+## Testing
+- [ ] Tested locally
+- [ ] Added test cases
+- [ ] Existing tests still pass
 
 ## Checklist
-- [ ] Kodun kendini açıklayıcı olduğundan emin misiniz?
-- [ ] Gereksiz yorum kaldırılmış mı?
-- [ ] Dokümantasyon güncellenmiş mi?
+- [ ] Is your code self-explanatory?
+- [ ] Have you removed unnecessary comments?
+- [ ] Is the documentation updated?
 ```
 
-## Test Etme
+## Testing
 
-### Unit Test'ler Çalıştırma
+### Running Unit Tests
 ```bash
 pytest tests/
 ```
 
-### Belirli Test'i Çalıştırma
+### Running a Specific Test
 ```bash
 pytest tests/test_detection.py::test_yolov8_inference
 ```
 
-### Test Kapsamı Kontrol
+### Checking Test Coverage
 ```bash
 pytest --cov=src tests/
 ```
 
-### Yeni Test Yazma
+### Writing New Tests
 ```python
 # tests/test_detection.py
 import unittest
@@ -202,9 +202,9 @@ class TestObjectDetector(unittest.TestCase):
         self.assertIn('detections', results)
 ```
 
-## Sık Sorulan Sorular
+## Frequently Asked Questions
 
-**S: PR'ımı nasıl güncel tutarım?**
+**Q: How do I keep my PR up to date?**
 A:
 ```bash
 git fetch origin
@@ -212,30 +212,30 @@ git rebase origin/main
 git push --force-with-lease origin your-branch
 ```
 
-**S: Hata yaptığım commit'ı nasıl düzeltirim?**
+**Q: How do I fix a commit I made by mistake?**
 A:
 ```bash
 git commit --amend
-# veya
-git rebase -i HEAD~n  # son n commit'i düzenlemek için
+# or
+git rebase -i HEAD~n  # to edit the last n commits
 ```
 
-**S: Branch'imi nasıl silirim?**
+**Q: How do I delete my branch?**
 A:
 ```bash
 git branch -d local-branch
 git push origin --delete remote-branch
 ```
 
-## İletişim
+## Contact
 
-Sorularınız varsa:
-- Issue açın
-- Discussions sekmesini kullanın
-- Proje maintainer'ına ulaşın
+If you have questions:
+- Open an issue
+- Use the Discussions tab
+- Contact the project maintainers
 
 ---
 
-**Not:** Tüm katkılar MIT Lisansı altında kabul edilir.
+**Note:** All contributions are accepted under the MIT License.
 
-Katkılarınız için teşekkürler! 🙏
+Thank you for your contributions! 🙏
