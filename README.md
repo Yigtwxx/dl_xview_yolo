@@ -206,8 +206,6 @@ LinkedIn: www.linkedin.com/in/yiğit-erdoğan-ba7a64294
 
 If you find this project useful, please consider giving it a **⭐ Star** on GitHub!
 
-🌐 **Live Project Page:** [https://yigtwxx.github.io/dl_xview_yolo](https://yigtwxx.github.io/dl_xview_yolo)
-
 ## Contact
 LinkedIn: www.linkedin.com/in/yiğit-erdoğan-ba7a64294
 
