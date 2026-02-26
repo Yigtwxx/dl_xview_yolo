@@ -1,0 +1,20 @@
+name: Greetings
+
+on:
+  pull_request_target:
+    types: [opened]
+  issues:
+    types: [opened]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: 'Merhaba! Depomuza ilk kaydınızı oluşturduğunuz için teşekkür ederiz. En kısa sürede sizinle ilgileneceğiz.'
+          pr-message: 'Merhaba! İlk Pull Request (PR) isteğiniz için teşekkür ederiz. Katkılarınız bizim için çok değerli, kod incelemesi en yakın zamanda yapılacaktır.'
