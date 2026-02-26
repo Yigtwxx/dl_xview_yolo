@@ -24,6 +24,6 @@ jobs:
         
     - name: Lint with flake8 (No error code returned)
       run: |
-        # Bu adım hata fırlatmaz (exit-zero). Kod kalitesini kontrol eder ancak PR'i bozmaz.
+        # This step will not return an error (exit-zero). It checks code quality without breaking the PR.
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exit-zero
         flake8 . --count --max-complexity=10 --max-line-length=127 --statistics --exit-zero
