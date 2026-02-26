@@ -1,0 +1,14 @@
+python:
+  - any: ['*.py', '**/*.py']
+
+docs:
+  - any: ['*.md', '**/*.md', 'docs/**/*']
+
+data:
+  - any: ['data/**/*', 'yolo_data/**/*', '*.pt']
+
+scripts:
+  - any: ['scripts/**/*']
+
+ui:
+  - any: ['ui/**/*']
