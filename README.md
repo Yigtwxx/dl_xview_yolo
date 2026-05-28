@@ -27,7 +27,7 @@ Data sources include **xView** and **DOTA** datasets.
 -  Easy path and parameter customization
 
 
-## 🗂️ Project Structure
+##  Project Structure
 ```text
 dl_xview_yolo/
 ├── scripts/
