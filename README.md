@@ -47,7 +47,7 @@ dl_xview_yolo/
 └── requirements.txt
 
 
-## ⚙️ Installation & Setup
+##  Installation & Setup
 
 ### 1️⃣ Environment Preparation
 
