@@ -71,7 +71,7 @@ pip install ultralytics opencv-python pillow tqdm numpy torch torchvision torcha
 
 ##  Dataset Preparation
 
-### 1️⃣ Supported Datasets
+### Supported Datasets
 
 * [xView Dataset](https://challenge.xviewdataset.org/)
 * [DOTA Dataset](https://captain-whu.github.io/DOTA/)
