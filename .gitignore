@@ -2,8 +2,10 @@ venv/
 data/
 runs/
 yolo_data/
+
 *.pt
 *.pth
 *.onnx
 *.ckpt
+
 __pycache__/
