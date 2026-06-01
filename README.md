@@ -117,11 +117,11 @@ python scripts/predict_yolo.py --ui
 ```
 
 Then open your browser at
-👉 **[http://127.0.0.1:7860/](http://127.0.0.1:7860/)**
+ **[http://127.0.0.1:7860/](http://127.0.0.1:7860/)**
 
 ---
 
-## 🎨 User Interface (UI)
+## User Interface (UI)
 
 Open `ui/index.html` directly in your browser to visualize predictions.
 
