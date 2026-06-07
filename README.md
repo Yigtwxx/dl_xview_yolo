@@ -126,7 +126,7 @@ Then open your browser at
 Open `ui/index.html` directly in your browser to visualize predictions.
 
 >  Modern design: world-themed background & glass-panel overlay
-> 📂 Upload: drag-and-drop or select image
+>  Upload: drag-and-drop or select image
 > 🧠 Backend: connects directly to YOLOv8 model for real-time inference
 
 ---
