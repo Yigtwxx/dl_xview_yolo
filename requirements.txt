@@ -1,0 +1,18 @@
+# Core detection stack
+ultralytics>=8.2.0
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Dataset conversion
+opencv-python>=4.8.0
+numpy>=1.24.0
+pillow>=10.0.0
+tqdm>=4.66.0
+
+# Metrics plotting
+matplotlib>=3.7.0
+
+# Prediction UI (optional: only needed for predict_yolo.py without --no-ui)
+fastapi>=0.110.0
+uvicorn>=0.27.0
+python-multipart>=0.0.9

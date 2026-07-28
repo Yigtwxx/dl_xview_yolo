@@ -3,8 +3,9 @@ import argparse, glob, io, re, datetime, webbrowser, shutil
 import numpy as np
 from PIL import Image
 
-import torch
 from ultralytics import YOLO
+
+from config import RUNS, TEST_DIR, UI_DIR, YOLO_DATA, ROOT, select_device
 
 try:
     from fastapi import FastAPI, UploadFile, File
@@ -15,14 +16,7 @@ except Exception:
     FASTAPI_OK = False
 
 
-
-ROOT      = Path(r"C:\Users\Asus\Desktop\dl_xview")
-RUNS      = ROOT / "runs"
-YOLO_DATA = ROOT / "yolo_data"
-DATA_DIR  = ROOT / "data"
-TEST_DIR  = DATA_DIR / "test_images"
 TEST_DIR.mkdir(parents=True, exist_ok=True)
-UI_DIR = Path(r"C:\Users\Asus\Desktop\dl_xview\ui")
 IMG_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
 
 
@@ -157,7 +151,7 @@ def main():
     ap.add_argument("--port", type=int, default=7860)
     args = ap.parse_args()
 
-    device = args.device if args.device is not None else ("0" if torch.cuda.is_available() else "cpu")
+    device = args.device if args.device is not None else select_device()
     weights = find_weights()
     model = YOLO(str(weights))
 

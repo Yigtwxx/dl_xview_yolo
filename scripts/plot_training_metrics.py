@@ -1,4 +1,3 @@
-# C:\Users\Asus\Desktop\dl_xview\scripts\plot_training_metrics.py
 import csv
 from pathlib import Path
 import matplotlib
@@ -7,7 +6,7 @@ import matplotlib.pyplot as plt
 import argparse
 import glob
 
-ROOT = Path(r"C:\Users\Asus\Desktop\dl_xview")
+from config import ROOT
 
 def auto_find_results_csv(root: Path) -> Path:
     """

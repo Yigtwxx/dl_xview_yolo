@@ -1,12 +1,8 @@
-# C:\Users\Asus\Desktop\dl_xview\scripts\val_yolo.py
 from ultralytics import YOLO
 from pathlib import Path
-import argparse, glob, torch
+import argparse, glob
 
-# ---- common paths ----
-ROOT = Path(r"C:\Users\Asus\Desktop\dl_xview")
-RUNS = ROOT / "runs"
-DATA_YAML = ROOT / "yolo_data" / "data.yaml"
+from config import DATA_YAML, RUNS, select_device
 
 def find_weights() -> Path:
     """
@@ -32,13 +28,13 @@ def main():
                     help="değerlendirilecek split")
     ap.add_argument("--device", type=str, default=None,
                     help="CUDA cihazı ('0' gibi) veya 'cpu'; boşsa otomatik algılar")
-    ap.add_argument("--project", type=str, default=str(ROOT / "runs" / "val"),
+    ap.add_argument("--project", type=str, default=str(RUNS / "val"),
                     help="Ultralytics çıktı projesi")
     ap.add_argument("--name", type=str, default="exp", help="deneme adı")
     args = ap.parse_args()
 
     # Device selection
-    device = args.device if args.device is not None else ("0" if torch.cuda.is_available() else "cpu")
+    device = args.device if args.device is not None else select_device()
 
     # Select weights
     weights = Path(args.weights) if args.weights else find_weights()
@@ -50,7 +46,7 @@ def main():
     print(f"Split         : {args.split}")
     print(f"Image size    : {args.imgsz}")
     print(f"Device        : {device}")
-    print(f"Save to       : {args.project}\\{args.name}")
+    print(f"Save to       : {Path(args.project) / args.name}")
 
     # Load model and evaluate
     model = YOLO(str(weights))

@@ -1,21 +1,15 @@
-# C:\Users\Asus\Desktop\dl_xview\scripts\convert_all_to_yolo.py
-
 from pathlib import Path
 from tqdm import tqdm
-import json, gzip
+import argparse, hashlib, json, gzip
 import cv2
 import numpy as np
 
-# ===============================
-# 1) Yol ayarları
-# ===============================
-ROOT = Path("C:/Users/Asus/Desktop/dl_xview")  # Windows'ta / kullanmak güvenli
-DATA = ROOT / "data"
-YOLO = ROOT / "yolo_data"
+from config import DATA, YOLO_DATA
 
-# çıkış klasörleri
-for sub in ["images/train", "images/val", "labels/train", "labels/val"]:
-    (YOLO / sub).mkdir(parents=True, exist_ok=True)
+
+def make_output_dirs(out_root: Path) -> None:
+    for sub in ["images/train", "images/val", "labels/train", "labels/val"]:
+        (out_root / sub).mkdir(parents=True, exist_ok=True)
 
 
 # ===============================
@@ -45,7 +39,14 @@ def clip(v, lo, hi):
 
 
 def is_val_split(name: str) -> bool:
-    return (hash(name) % 10) < 2
+    """Deterministic ~20% validation split.
+
+    Uses md5 rather than the builtin hash(): CPython salts string hashes per
+    process, so hash() would reshuffle the split on every run and leak training
+    images into validation across re-conversions.
+    """
+    digest = hashlib.md5(name.encode("utf-8")).hexdigest()
+    return (int(digest, 16) % 10) < 2
 
 
 # ===============================
@@ -157,14 +158,14 @@ def extract_bbox_from_props(props: dict):
     return None
 
 
-def auto_find_xview_geojson() -> Path:
+def auto_find_xview_geojson(data_dir: Path) -> Path:
     cands = [
-        DATA / "xview_raw" / "xView_train.geojson",
-        DATA / "xView_train.geojson",
-        DATA / "xview_raw" / "xView_train.geojson.gz",
-        DATA / "xView_train.geojson.gz",
-        * (DATA / "xview_raw").glob("*.geojson"),
-        * DATA.glob("*.geojson"),
+        data_dir / "xview_raw" / "xView_train.geojson",
+        data_dir / "xView_train.geojson",
+        data_dir / "xview_raw" / "xView_train.geojson.gz",
+        data_dir / "xView_train.geojson.gz",
+        * (data_dir / "xview_raw").glob("*.geojson"),
+        * data_dir.glob("*.geojson"),
     ]
     cands = [p for p in cands if p.exists()]
     if not cands:
@@ -176,14 +177,14 @@ def xview_to_yolo_cls(xv: int) -> int:
     return int(xv) - 1
 
 
-def convert_xview():
-    xview_root = DATA / "xview_raw"
+def convert_xview(data_dir: Path, out_root: Path):
+    xview_root = data_dir / "xview_raw"
 
     # görüntü klasörünü bul
     img_candidates = [
         xview_root / "images" / "train",
         xview_root / "train_images",
-        DATA / "train_images",
+        data_dir / "train_images",
     ]
     img_dir = None
     for c in img_candidates:
@@ -196,7 +197,7 @@ def convert_xview():
 
     print(f"📁 xView görüntü klasörü: {img_dir}")
 
-    gj_path = auto_find_xview_geojson()
+    gj_path = auto_find_xview_geojson(data_dir)
     print(f"📄 xView GeoJSON: {gj_path}")
     gj = load_geojson_any(gj_path)
     feats = gj.get("features", [])
@@ -240,8 +241,8 @@ def convert_xview():
     for img_p in tqdm(img_list, desc="xView dönüştürülüyor"):
         stem = img_p.stem
         split = "val" if is_val_split(stem) else "train"
-        out_img = YOLO / "images" / split / f"{stem}.jpg"
-        out_lbl = YOLO / "labels" / split / f"{stem}.txt"
+        out_img = out_root / "images" / split / f"{stem}.jpg"
+        out_lbl = out_root / "labels" / split / f"{stem}.txt"
 
         convert_to_jpg(img_p, out_img)
 
@@ -296,6 +297,13 @@ DOTA_CLASSES = [
     "soccer-ball-field", "swimming-pool",
 ]
 
+# xView occupies ids 0..59 (type_id - 1), so DOTA classes are shifted above it.
+# Without this offset, writing both datasets into the same labels/ directory
+# would silently map DOTA's "plane" onto xView class 0.
+XVIEW_NUM_CLASSES = 60
+DOTA_CLASS_OFFSET = XVIEW_NUM_CLASSES
+NUM_CLASSES = XVIEW_NUM_CLASSES + len(DOTA_CLASSES)
+
 
 def parse_dota_line(line: str):
     parts = line.strip().split()
@@ -311,8 +319,8 @@ def parse_dota_line(line: str):
     return xmin, ymin, xmax, ymax, cls_name
 
 
-def convert_dota():
-    dota_root = DATA / "dota_raw"
+def convert_dota(data_dir: Path, out_root: Path):
+    dota_root = data_dir / "dota_raw"
     img_dir = dota_root / "images" / "train"
     lbl_dir = dota_root / "labelTxt-v1.5" / "train"
 
@@ -336,15 +344,15 @@ def convert_dota():
             else:
                 # etiket yoksa boş label
                 split = "val" if is_val_split(stem) else "train"
-                out_img = YOLO / "images" / split / f"{stem}.jpg"
-                out_lbl = YOLO / "labels" / split / f"{stem}.txt"
+                out_img = out_root / "images" / split / f"{stem}.jpg"
+                out_lbl = out_root / "labels" / split / f"{stem}.txt"
                 convert_to_jpg(img_p, out_img)
                 out_lbl.write_text("", encoding="utf-8")
                 continue
 
         split = "val" if is_val_split(stem) else "train"
-        out_img = YOLO / "images" / split / f"{stem}.jpg"
-        out_lbl = YOLO / "labels" / split / f"{stem}.txt"
+        out_img = out_root / "images" / split / f"{stem}.jpg"
+        out_lbl = out_root / "labels" / split / f"{stem}.txt"
         convert_to_jpg(img_p, out_img)
 
         im = cv2.imread(str(out_img))
@@ -370,7 +378,7 @@ def convert_dota():
                 bh = (ymax - ymin) / h
 
                 if cls_name in DOTA_CLASSES:
-                    cls_id = DOTA_CLASSES.index(cls_name)
+                    cls_id = DOTA_CLASSES.index(cls_name) + DOTA_CLASS_OFFSET
                 else:
                     continue
 
@@ -385,28 +393,51 @@ def convert_dota():
 # ===============================
 # data.yaml
 # ===============================
-def write_data_yaml():
-    yaml_p = YOLO / "data.yaml"
-    if yaml_p.exists():
-        print("ℹ️ data.yaml zaten var.")
+def write_data_yaml(out_root: Path, overwrite: bool = False):
+    yaml_p = out_root / "data.yaml"
+    if yaml_p.exists() and not overwrite:
+        print("ℹ️ data.yaml zaten var (üzerine yazmak için --overwrite-yaml).")
         return
+
+    # xView ships numeric type ids only, so those classes stay numbered.
+    names = [f"xview_{i}" for i in range(XVIEW_NUM_CLASSES)] + DOTA_CLASSES
     yaml_p.write_text(
-        "path: " + str(YOLO) + "\n"
+        "path: " + str(out_root) + "\n"
         "train: images/train\n"
         "val: images/val\n"
-        "nc: 60\n"
-        "names: [" + ",".join(str(i) for i in range(60)) + "]\n",
+        f"nc: {NUM_CLASSES}\n"
+        "names: [" + ", ".join(names) + "]\n",
         encoding="utf-8"
     )
-    print(f"📝 data.yaml yazıldı: {yaml_p}")
+    print(f"📝 data.yaml yazıldı: {yaml_p} (nc={NUM_CLASSES})")
 
 
 # ===============================
 # MAIN
 # ===============================
+def main():
+    ap = argparse.ArgumentParser(description="xView / DOTA → YOLO format dönüştürücü")
+    ap.add_argument("--src", type=Path, default=DATA,
+                    help="Ham veri klasörü; xview_raw/ ve dota_raw/ burada aranır")
+    ap.add_argument("--out", type=Path, default=YOLO_DATA,
+                    help="YOLO formatındaki çıktı klasörü")
+    ap.add_argument("--datasets", nargs="+", choices=["xview", "dota"],
+                    default=["xview", "dota"], help="Dönüştürülecek veri setleri")
+    ap.add_argument("--overwrite-yaml", action="store_true",
+                    help="Mevcut data.yaml dosyasının üzerine yaz")
+    args = ap.parse_args()
+
+    print(f"🚀 Başlıyoruz... kaynak={args.src} çıkış={args.out}")
+    make_output_dirs(args.out)
+
+    if "xview" in args.datasets:
+        convert_xview(args.src, args.out)
+    if "dota" in args.datasets:
+        convert_dota(args.src, args.out)
+
+    write_data_yaml(args.out, overwrite=args.overwrite_yaml)
+    print("✅ Tüm işlemler bitti. Çıkış:", args.out)
+
+
 if __name__ == "__main__":
-    print("🚀 Başlıyoruz...")
-    convert_xview()
-    convert_dota()
-    write_data_yaml()
-    print("✅ Tüm işlemler bitti. Çıkış:", YOLO)
+    main()

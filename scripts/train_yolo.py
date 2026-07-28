@@ -1,20 +1,11 @@
 from ultralytics import YOLO
-from pathlib import Path
-import torch
 import argparse
+import torch
 
-# To continue from where you left off: find the last.pt file in dir C:\Users\Asus\Desktop\dl_xview\runs\train\weights
-# Then: python scripts\train_yolo.py --weights C:\Users\Asus\Desktop\dl_xview\runs\train\weights\last.pt --resume
+from config import DATA_YAML, RUNS, describe_device, select_device
 
-# ==========================
-# common paths
-# ==========================
-ROOT = Path(r"C:\Users\Asus\Desktop\dl_xview")
-YOLO_DATA = ROOT / "yolo_data"
-RUNS_DIR = ROOT / "runs"
-
-# Current data file:
-DATA_YAML = YOLO_DATA / "data.yaml"   # C:\Users\Asus\Desktop\dl_xview\yolo_data\data.yaml
+# To resume from where you left off, point --weights at the last checkpoint:
+#   python scripts/train_yolo.py --weights runs/train/weights/last.pt --resume
 
 # 🔴 IMPORTANT: WE ARE TRAINING DETECTION NOT OBB
 # Previously: "yolov8m-obb.pt"
@@ -37,8 +28,20 @@ def main():
     parser.add_argument(
         "--epochs",
         type=int,
-        default=250,
-        help="Total number of epochs to run (default: 250)",
+        default=100,
+        help="Total number of epochs to run (default: 100)",
+    )
+    parser.add_argument(
+        "--imgsz",
+        type=int,
+        default=1024,
+        help="Training image size; small objects need resolution (default: 1024)",
+    )
+    parser.add_argument(
+        "--batch",
+        type=int,
+        default=4,
+        help="Batch size (default: 4, which fits 1024px on a single GPU)",
     )
     parser.add_argument(
         "--name",
@@ -48,10 +51,9 @@ def main():
     )
     args = parser.parse_args()
 
-    # device selection
-    device = "0" if torch.cuda.is_available() else "cpu"
-    device_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
-    print(f"\n💻 Kullanılan cihaz: {device} ({device_name})")
+    # device selection: CUDA -> MPS -> CPU
+    device = select_device()
+    print(f"\n💻 Kullanılan cihaz: {device} ({describe_device(device)})")
     print(f"📦 Kullanılan ağırlık: {args.weights}    (resume={args.resume})")
 
     # 🔴 DETECTION MODEL LOADING
@@ -62,9 +64,9 @@ def main():
     # ==========================
     results = model.train(
         data=str(DATA_YAML),
-        epochs=100,
-        imgsz=1024,
-        batch=4,
+        epochs=args.epochs,
+        imgsz=args.imgsz,
+        batch=args.batch,
         device=device,
         workers=2,
         optimizer="AdamW",
@@ -78,7 +80,7 @@ def main():
         patience=30,
         cos_lr=True,
         pretrained=True,
-        project=str(RUNS_DIR),
+        project=str(RUNS),
         name=args.name,
         exist_ok=True,
         resume=args.resume,
@@ -88,7 +90,7 @@ def main():
     print("\n✅ [EĞİTİM TAMAMLANDI]")
     print(f"📂 Sonuç klasörü: {results.save_dir}")
 
-    if torch.cuda.is_available():
+    if device.isdigit():
         print(f"🔥 GPU VRAM kullanımı: {torch.cuda.max_memory_allocated() / 1e9:.2f} GB")
 
 
