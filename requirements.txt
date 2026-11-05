@@ -1,5 +1,5 @@
 # Core detection stack
-ultralytics>=8.2.0
+ultralytics>=8.4.198
 torch>=2.0.0
 torchvision>=0.15.0
 
